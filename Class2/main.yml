@@ -1,0 +1,24 @@
+- hosts: all
+  tasks:
+  - name: install packages
+    yum:
+      name: httpd
+      state: present
+    notify: Restart httpd
+  - name: install packages
+    yum:
+      name: vim
+      state: present
+    notify: Install tree
+
+  handlers:
+  - name: Restart httpd
+    service:
+      name: httpd        
+      state: restarted
+  - name: Install tree
+    yum:
+      name: tree           
+      state: present
+
+    

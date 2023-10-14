@@ -1,0 +1,9 @@
+- hosts: all
+  tasks: 
+  - debug: 
+      msg: "OS is: {{ ansible_distribution }}"
+
+
+  - name: Print OS
+    #become: yes = sudo install (for not root users)
+    include_tasks: "{{ ansible_distribution }}.yml"
