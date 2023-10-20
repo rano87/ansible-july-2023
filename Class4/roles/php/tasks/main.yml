@@ -1,0 +1,16 @@
+- name: Enable php 74
+  shell: yum-config-manager --enable remi-php74
+  when: php_version == 74
+
+- name: Enable php 73
+  shell: yum-config-manager --enable remi-php73
+  when: php_version == 73
+
+- name: Enable php 72
+  shell: yum-config-manager --enable remi-php72
+  when: php_version == 72
+
+- name: Install php
+  yum:
+    name: "{{ packages_php }}"
+    state: present

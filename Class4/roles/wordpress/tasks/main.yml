@@ -1,0 +1,31 @@
+- name: Download wordpress
+  get_url:
+    url: "{{ wordpress_url }}"
+    dest: "{{ wordress_dest }}"
+
+- name: Extract wordpress
+  unarchive:
+    src: "{{ wordress_dest }}"
+    dest: /tmp
+    remote_src: yes
+
+- name: Copy file with owner and permissions
+  copy:
+    src: /tmp/wordpress/.
+    dest: /var/www/html
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    mode: '755'
+    remote_src: yes
+
+- name: Template a file to /var/www/html
+  template:
+    src: wp-config.php.j2
+    dest: /var/www/html/wp-config.php
+
+- name: Start and enable Apache
+  service:
+    name: httpd
+    state: restarted
+
+
